@@ -17,6 +17,11 @@ public class CardController {
         this.cardService = cardService;
     }
 
+    @GetMapping("/api_status")
+    public String status() {
+        return "Server is up and running.";
+    }
+
     @GetMapping("/{category}/{imageName}")
     public ResponseEntity<Resource> getImageByCategory(@PathVariable String category, @PathVariable String imageName) {
         return cardService.getImageByCategory(category, imageName);
