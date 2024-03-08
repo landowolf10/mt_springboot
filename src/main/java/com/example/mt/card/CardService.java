@@ -9,9 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CardService {
-    ResponseEntity<Resource> getImageByCategory(String category, String imageName);
-    List<String> getCardNamesByCategory(String category);
-    List<CardStatus> fetchAllCards();
     CardStatus insertCardStatus(CardStatus card);
     Integer countByStatus(String status);
     Integer countByClientIdAndStatus(int clientId, String status);

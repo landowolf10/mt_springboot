@@ -22,21 +22,6 @@ public class CardController {
         return "Server is up and running.";
     }
 
-    @GetMapping("/{category}/{imageName}")
-    public ResponseEntity<Resource> getImageByCategory(@PathVariable String category, @PathVariable String imageName) {
-        return cardService.getImageByCategory(category, imageName);
-    }
-
-    @GetMapping("/list/{category}")
-    public List<String> getCardNamesByCategory(@PathVariable String category) {
-        return cardService.getCardNamesByCategory(category);
-    }
-
-    @GetMapping("/cards")
-    public List<CardStatus> getAllCards() {
-        return cardService.fetchAllCards();
-    }
-
     @PostMapping("/cards")
     public CardStatus registerCardStatus(@RequestBody CardStatus card) {
         return cardService.insertCardStatus(card);

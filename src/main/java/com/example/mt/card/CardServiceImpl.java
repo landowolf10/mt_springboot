@@ -29,52 +29,6 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public ResponseEntity<Resource> getImageByCategory(String category, String imageName) {
-        try {
-            String externalFolderPath = "./src/main/resources/cards/";
-
-            Path imagePath = Paths.get(externalFolderPath, category, imageName);
-            Resource resource = new FileSystemResource(imagePath);
-
-            return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG)
-                    .body(resource);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @Override
-    public List<String> getCardNamesByCategory(String category) {
-        String imageFolderPath = "C:/Users/orlan/Documents/Projects/Angular/mini-tourist/src/assets/cards/" + category;
-
-        System.out.println("Image folder path: " + imageFolderPath);
-
-        File imageFolder = new File(imageFolderPath);
-        File[] imageFiles = imageFolder.listFiles();
-
-        List<String> imageNames;
-
-        imageNames = new ArrayList<>();
-        if (imageFiles != null) {
-            Arrays.stream(imageFiles)
-                    .filter(File::isFile)
-                    .forEach(file -> imageNames.add(file.getName()));
-
-
-        }
-
-        System.out.println("Image names: " + imageNames);
-
-        return  imageNames;
-    }
-
-    @Override
-    public List<CardStatus> fetchAllCards() {
-        return cardRepository.findAll();
-    }
-
-    @Override
     public CardStatus insertCardStatus(CardStatus card) {
         return cardRepository.save(card);
     }

@@ -1,5 +1,8 @@
 package com.example.mt.client;
 
+import com.example.mt.card.CardStatus;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +23,22 @@ public class ClientController {
     public List<CardStatus> getAllCards() {
         return cardService.fetchAllCards();
     }*/
+
+    /*@GetMapping("/{category}/{cardName}")
+    public ResponseEntity<Resource> getImageByCategoryAndCardName(@PathVariable
+                                                                      String category, @PathVariable String cardName) {
+        return clientService.getImageByCategoryAndCardName(category, cardName);
+    }*/
+
+    @GetMapping("/cards")
+    public List<Clients> getAllCards() {
+        return clientService.fetchAllCards();
+    }
+
+    @GetMapping("/list/{category}")
+    public List<String> getCardNamesByCategory(@PathVariable String category) {
+        return clientService.getCardNamesByCategory(category);
+    }
 
     @PostMapping("/register")
     public Clients registerUser(@ModelAttribute Clients client,

@@ -6,6 +6,8 @@ import java.util.List;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Clients, Integer> {
+    //Resource getImageByCategoryAndCardName(String category, String cardName);
+    List<Clients> getCardNameByCategory(String category);
     List<Clients> getClientByCategory(String category);
     List<Clients> getClientByPremium(String isPremium);
     Integer countByCategory(String category);
