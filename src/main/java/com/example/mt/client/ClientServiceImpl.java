@@ -29,6 +29,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     /*@Override
+    public List<String> getCardNameByCardName(String cardName) {
+        return clientRepository.getCardNameByCardName(cardName);
+    }*/
+
+    /*@Override
     public ResponseEntity<Resource> getImageByCategoryAndCardName(String category, String cardName) {
         try {
             String externalFolderPath = "http://res.cloudinary.com/dbwgqd2ap/image/upload/v1709750439/cards/" + category
@@ -91,11 +96,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Clients> fetchClientsByCategory(String category, String isPremium) {
-        if (isPremium.equalsIgnoreCase("Yes"))
-            return clientRepository.getClientByPremium(isPremium);
-
+    public List<Clients> fetchClientsByCategory(String category) {
         return clientRepository.getClientByCategory(category);
+    }
+
+    @Override
+    public List<Clients> fetchClientsByPremium(String isPremium) {
+        return clientRepository.getClientByPremium(isPremium);
     }
 
     @Override
@@ -162,16 +169,16 @@ public class ClientServiceImpl implements ClientService {
         ));
 
         // Get the file name
-        String fileName = file.getOriginalFilename();
+        //String fileName = file.getOriginalFilename();
 
-        // Define the folder path where you want to save the image
+        //Creates main folder and subfolder (i.e. cards/Lugares y eventos).
         String folderPath = "cards/" + category + "/";
 
         // Set options for uploading
         Map<String, Object> options = new HashMap<>();
         options.put("folder", folderPath);
 
-        // Upload the file to Cloudinary
+        //Uploads the file to Cloudinary, and creates the folder if it doesn't exist.
         Map uploadedFile = cloudinary.uploader().upload(file.getBytes(), options);
 
         if (isPremium.equalsIgnoreCase("Yes")) {
@@ -182,7 +189,8 @@ public class ClientServiceImpl implements ClientService {
             premiumOptions.put("folder", premiumPath);
 
             // Upload the file to Cloudinary for premium
-            Map uploadedPremiumFile = cloudinary.uploader().upload(file.getBytes(), premiumOptions);
+            //Map uploadedPremiumFile = cloudinary.uploader().upload(file.getBytes(), premiumOptions);
+            uploadedFile = cloudinary.uploader().upload(file.getBytes(), premiumOptions);
         }
 
         // Return the image path

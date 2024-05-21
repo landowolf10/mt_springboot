@@ -1,12 +1,9 @@
 package com.example.mt.client;
 
-import com.example.mt.card.CardStatus;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,10 +27,17 @@ public class ClientController {
         return clientService.getImageByCategoryAndCardName(category, cardName);
     }*/
 
+    @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/cards")
     public List<Clients> getAllCards() {
         return clientService.fetchAllCards();
     }
+
+    /*@ResponseStatus(HttpStatus.FOUND)
+    @GetMapping("/cards")
+    public List<Clients> getAllCards() {
+        return clientService.fetchAllCards();
+    }*/
 
     @GetMapping("/list/{category}")
     public List<String> getCardNamesByCategory(@PathVariable String category) {
@@ -53,10 +57,16 @@ public class ClientController {
 
     @GetMapping("/category")
     public List<Clients> fetchClientsByCategory(
-            @RequestParam("category") String category,
+            @RequestParam("category") String category
+    ) {
+        return clientService.fetchClientsByCategory(category);
+    }
+
+    @GetMapping("/category/premium")
+    public List<Clients> fetchClientsByPremium(
             @RequestParam("isPremium") String isPremium
     ) {
-        return clientService.fetchClientsByCategory(category, isPremium);
+        return clientService.fetchClientsByPremium(isPremium);
     }
 
     @GetMapping()

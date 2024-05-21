@@ -2,15 +2,20 @@ package com.example.mt.client;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Clients {
-    public Clients(Integer clientId, String cardName, String city, String category, String premium, String image) {
+    public Clients(Integer clientId, String cardName, String city, String category, String premium, String image,
+                   LocalDateTime creationDate, LocalDateTime updateDate) {
         this.clientId = clientId;
         this.cardName = cardName;
         this.city = city;
         this.category = category;
         this.premium = premium;
         this.image = image;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
     }
 
     public Clients() {
@@ -26,6 +31,8 @@ public class Clients {
     private String category;
     private String premium;
     private String image;
+    private LocalDateTime creationDate;
+    private LocalDateTime updateDate;
 
     public Integer getClientId() {
         return clientId;
@@ -73,5 +80,31 @@ public class Clients {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    @PrePersist
+    private void assignCreationDate() {
+        creationDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void assignUpdateDate() {
+        updateDate = LocalDateTime.now();
     }
 }
