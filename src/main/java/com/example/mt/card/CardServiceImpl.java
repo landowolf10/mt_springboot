@@ -2,20 +2,10 @@ package com.example.mt.card;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -34,23 +24,37 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Integer countByStatus(String status) {
-        return cardRepository.countByStatus(status);
+    public GeneralStatusCountDTO countByStatus() {
+        return cardRepository.countByStatus();
     }
 
     @Override
-    public Integer countByClientIdAndStatus(int clientId, String status) {
-        return cardRepository.countByClientIdAndStatus(clientId, status);
+    public GeneralStatusCountDateDTO countByStatusAndDate(LocalDate date) {
+        return cardRepository.countByStatusAndDate(date);
     }
 
     @Override
-    public Integer countByDateAndStatusAndClientId(LocalDate date, String status, int clientId) {
-        return cardRepository.countByDateAndStatusAndClientId(date, status, clientId);
+    public GeneralStatusCountDTO countByStatusAndDateBetween(LocalDate startDate, LocalDate endDate) {
+        return cardRepository.countByStatusAndDateBetween(startDate, endDate);
     }
 
     @Override
-    public Integer countByStatusAndClientIdAndDateBetween(LocalDate startDate, LocalDate endDate, String status,
-                                                          int clientId) {
+    public GeneralStatusCountDTO countByCityAndStatus(String city) {
+        return cardRepository.countByCityAndStatus(city);
+    }
+
+    @Override
+    public StatusCountDTO countByClientIdAndStatus(int clientId) {
+        return cardRepository.countByClientIdAndStatus(clientId);
+    }
+
+    @Override
+    public GeneralStatusCountDateDTO countByDateAndStatusAndClientId(int clientId, LocalDate date) {
+        return cardRepository.countByDateAndStatusAndClientId(clientId, date);
+    }
+
+    @Override
+    public GeneralStatusCountDTO countByStatusAndClientIdAndDateBetween(int clientId, LocalDate startDate, LocalDate endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         //LocalDate maxThreeMonths = endDate.minusMonths(3);
@@ -61,11 +65,11 @@ public class CardServiceImpl implements CardService {
         if (endDate.isBefore(startDate.minusMonths(3)) || startDate.isBefore(endDate.minusMonths(3)))
             System.out.println("Not more than 3 months");
 
-        return cardRepository.countByStatusAndClientIdAndDateBetween(startDate, endDate, status, clientId);
+        return cardRepository.countByStatusAndClientIdAndDateBetween(clientId, startDate, endDate);
     }
 
     @Override
-    public Integer countByCityAndClientId(String city, String status, int clientId) {
-        return cardRepository.countByCityAndStatusAndClientId(city, status, clientId);
+    public GeneralStatusCountDTO countByCityAndStatusAndClientId(int clientId, String city) {
+        return cardRepository.countByCityAndStatusAndClientId(clientId, city);
     }
 }
