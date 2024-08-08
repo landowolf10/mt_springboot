@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ClientService {
     //ResponseEntity<Resource> getImageByCategoryAndCardName(String category, String cardName);
+    Clients getClientByClientId(Long clientId);
     List<Clients> fetchAllCards();
     //List<String> getCardNameByCardName(String category);
     List<String> getCardNamesByCategory(String category);

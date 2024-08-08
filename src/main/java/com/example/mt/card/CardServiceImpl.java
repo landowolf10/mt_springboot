@@ -30,12 +30,20 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public GeneralStatusCountDateDTO countByStatusAndDate(LocalDate date) {
-        return cardRepository.countByStatusAndDate(date);
+        GeneralStatusCountDateDTO result = cardRepository.countByStatusAndDate(date);
+        if (result == null) {
+            return new GeneralStatusCountDateDTO(date, 0L, 0L);
+        }
+        return result;
     }
 
     @Override
     public GeneralStatusCountDTO countByStatusAndDateBetween(LocalDate startDate, LocalDate endDate) {
-        return cardRepository.countByStatusAndDateBetween(startDate, endDate);
+        GeneralStatusCountDTO result = cardRepository.countByStatusAndDateBetween(startDate, endDate);
+        if (result == null) {
+            return new GeneralStatusCountDTO(0L, 0L);
+        }
+        return result;
     }
 
     @Override

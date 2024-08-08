@@ -16,17 +16,17 @@ public interface CardRepository extends JpaRepository<CardStatus, Integer> {
             "WHERE (cs.status = 'Visited' OR cs.status = 'Downloaded')")
     GeneralStatusCountDTO countByStatus();
 
-    @Query("SELECT new com.example.mt.card.GeneralStatusCountDateDTO(cs.date, " +
-            "SUM(CASE WHEN cs.status = 'Visited' THEN 1 ELSE 0 END), " +
-            "SUM(CASE WHEN cs.status = 'Downloaded' THEN 1 ELSE 0 END)) " +
+    @Query("SELECT new com.example.mt.card.GeneralStatusCountDateDTO(:date, " +
+            "COALESCE(SUM(CASE WHEN cs.status = 'Visited' THEN 1 ELSE 0 END), 0), " +
+            "COALESCE(SUM(CASE WHEN cs.status = 'Downloaded' THEN 1 ELSE 0 END), 0)) " +
             "FROM CardStatus cs " +
             "WHERE (cs.status = 'Visited' OR cs.status = 'Downloaded') AND cs.date = :date " +
             "GROUP BY cs.date")
     GeneralStatusCountDateDTO countByStatusAndDate(LocalDate date);
 
     @Query("SELECT new com.example.mt.card.GeneralStatusCountDTO(" +
-            "SUM(CASE WHEN cs.status = 'Visited' THEN 1 ELSE 0 END), " +
-            "SUM(CASE WHEN cs.status = 'Downloaded' THEN 1 ELSE 0 END)) " +
+            "COALESCE(SUM(CASE WHEN cs.status = 'Visited' THEN 1 ELSE 0 END), 0), " +
+            "COALESCE(SUM(CASE WHEN cs.status = 'Downloaded' THEN 1 ELSE 0 END), 0)) " +
             "FROM CardStatus cs " +
             "WHERE (cs.status = 'Visited' OR cs.status = 'Downloaded') AND cs.date BETWEEN :startDate AND :endDate")
     GeneralStatusCountDTO countByStatusAndDateBetween(LocalDate startDate, LocalDate endDate);

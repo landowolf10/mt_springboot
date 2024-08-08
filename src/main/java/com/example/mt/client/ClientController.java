@@ -1,6 +1,7 @@
 package com.example.mt.client;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,9 +28,14 @@ public class ClientController {
         return clientService.getImageByCategoryAndCardName(category, cardName);
     }*/
 
+    @GetMapping("/selected")
+    public ResponseEntity<Clients> getClientByClientId(@RequestParam("clientId") Long clientId) {
+        return ResponseEntity.ok(clientService.getClientByClientId(clientId));
+    }
+
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/cards")
-    public List<Clients> getAllCards() {
+    public List<Clients> getAllClients() {
         return clientService.fetchAllCards();
     }
 

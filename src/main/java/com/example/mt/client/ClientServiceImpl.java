@@ -24,6 +24,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Clients getClientByClientId(Long clientId) {
+        Clients selectedClient = clientRepository.getClientByClientId(clientId);
+
+
+        System.out.println("Selected client id: " + selectedClient.getClientId());
+        System.out.println("Selected client name: " + selectedClient.getCardName());
+
+        return selectedClient;
+    }
+
+
+    @Override
     public List<Clients> fetchAllCards() {
         return clientRepository.findAll();
     }
